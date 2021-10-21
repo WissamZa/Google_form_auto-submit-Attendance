@@ -43,22 +43,20 @@ def creatNewFile():
         "Enter google form url you want to submit (keep it empty for the default value):\n")
     if geturl == "":
         url = "https://docs.google.com/forms/d/e/1FAIpQLSdDYw8ubu1Mhlab3FEEFyFxoTqNS7l9mwVYSgOfdBRsVCNsKg/formResponse"
-        entry_Name = "entry.1007048057"
-        entry_Email = "entry.1478463505"
-        entry_Status = "entry.1745557221"
+        
 
     else:
         url = re.search("(.*docs.google.com/forms/d/e/.*)/.*", geturl)
         url = url.group(1)+"/formResponse"
 
-        req = requests.get(url)
-        if (check_form(req)):
-            e = re.findall(
-                "(?:\"|)(?:Name|Email|Status)(?: \",|\",)null,\d,\[\[([0-9]+)", req.text)
+    req = requests.get(url)
+    if (check_form(req)):
+        e = re.findall(
+            "(?:\"|)(?:Name|Email|Status)(?: \",|\",)null,\d,\[\[([0-9]+)", req.text)
 
-            entry_Name = e[0]
-            entry_Email = e[1]
-            entry_Status = e[2]
+        entry_Name = e[0]
+        entry_Email = e[1]
+        entry_Status = e[2]+"_sentinel"
     name = input("Enter your name:\n")
     email = input("Enter your email:\n")
     json_data = {
