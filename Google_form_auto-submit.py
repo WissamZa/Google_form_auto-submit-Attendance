@@ -3,7 +3,6 @@ import re
 from datetime import datetime, time
 import os
 import json
-import time
 
 
 def check_form(req):
@@ -21,6 +20,7 @@ def post():
         email = values[1]
         status = values[2]
         print(f"{url=}\n{name=}\n{email=}\n{status=}")
+
         req = requests.get(url)
         if (check_form(req)):
             sent = requests.post(url, submission)
@@ -54,7 +54,8 @@ def creatNewFile():
         req = requests.get(url)
         if (check_form(req)):
             e = re.findall(
-                "(?:Name|Email|Status)&quot;,null,\d,\[\[([0-9]+)", req.text)
+                "(?:\"|)(?:Name|Email|Status)(?: \",|\",)null,\d,\[\[([0-9]+)", req.text)
+
             entry_Name = e[0]
             entry_Email = e[1]
             entry_Status = e[2]
@@ -70,7 +71,7 @@ def creatNewFile():
     }
     with open("info.json", "w") as jason_file:
         json.dump(json_data, jason_file)
-        time.sleep(4)
+
     post()
 
 
