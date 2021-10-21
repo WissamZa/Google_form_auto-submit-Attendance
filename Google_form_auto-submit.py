@@ -34,7 +34,7 @@ def post():
             else:
                 print('An error has occurred  Code ' + str(sent.status_code))
         else:
-            print("the form is close now try again later")
+            print("The form is close now try again later")
 
 
 def creatNewFile():
@@ -44,7 +44,6 @@ def creatNewFile():
     if geturl == "":
         url = "https://docs.google.com/forms/d/e/1FAIpQLSdDYw8ubu1Mhlab3FEEFyFxoTqNS7l9mwVYSgOfdBRsVCNsKg/formResponse"
         
-
     else:
         url = re.search("(.*docs.google.com/forms/d/e/.*)/.*", geturl)
         url = url.group(1)+"/formResponse"
@@ -56,22 +55,23 @@ def creatNewFile():
 
         entry_Name = e[0]
         entry_Email = e[1]
-        entry_Status = e[2]+"_sentinel"
-    name = input("Enter your name:\n")
-    email = input("Enter your email:\n")
-    json_data = {
-        "url": url,
-        "data": {
-            f"entry.{entry_Name}": name,
-            f"entry.{entry_Email}": email,
-            f"entry.{entry_Status}": "Present"
+        entry_Status = e[2]
+        name = input("Enter your name:\n")
+        email = input("Enter your email:\n")
+        json_data = {
+            "url": url,
+            "data": {
+                f"entry.{entry_Name}": name,
+                f"entry.{entry_Email}": email,
+                f"entry.{entry_Status}": "Present"
+            }
         }
-    }
-    with open("info.json", "w") as jason_file:
-        json.dump(json_data, jason_file)
+        with open("info.json", "w") as jason_file:
+            json.dump(json_data, jason_file)
 
-    post()
-
+        post()
+    else:
+        print("The form is close now try again later")
 
 if(os.path.exists('info.json')):
     post()
