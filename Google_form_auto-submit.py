@@ -8,7 +8,7 @@ if(subprocess.run("pip3 show requests", stdout=subprocess.DEVNULL,
 
 import requests
 import re
-from datetime import datetime, time
+from datetime import datetime
 import os
 import json
 def check_form(req):
